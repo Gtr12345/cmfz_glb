@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.UserMapperDao">
+    <select id="queryAllNan" resultType="trend">
+        select
+        concat(month(create_date)) as date,count(*) as count
+        from user
+        where sex='男'
+        GROUP BY month(create_date)
+    </select>
+    <select id="queryAllNv" resultType="trend">
+        select
+        concat(month(create_date)) as date,count(*) as count
+        from user
+        where sex='女'
+        GROUP BY month(create_date)
+    </select>
+</mapper>
