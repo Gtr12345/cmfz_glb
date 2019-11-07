@@ -1,5 +1,7 @@
 package com.baizhi.service.impl;
 
+import com.baizhi.annotation.ClearRedis;
+import com.baizhi.annotation.RedisCache;
 import com.baizhi.dao.ChapterDao;
 import com.baizhi.entity.Chapter;
 import com.baizhi.service.ChapterService;
@@ -17,6 +19,7 @@ public class ChapterServiceImpl implements ChapterService {
     private ChapterDao chapterDao;
 
     @Override
+    @RedisCache
     public Map<String, Object> selectChaptersByAlbumId(Integer page, Integer rows, String albumId) {
         Chapter chapter = new Chapter();
         chapter.setAlbumId(albumId);
@@ -32,6 +35,7 @@ public class ChapterServiceImpl implements ChapterService {
     }
 
     @Override
+    @ClearRedis
     public String add(Chapter chapter) {
         chapter.setId(UUID.randomUUID().toString());
         chapter.setCreateDate(new Date());
@@ -43,6 +47,7 @@ public class ChapterServiceImpl implements ChapterService {
     }
 
     @Override
+    @ClearRedis
     public void edit(Chapter chapter) {
         System.out.println(chapter);
         int i = chapterDao.updateByPrimaryKeySelective(chapter);

@@ -1,9 +1,11 @@
-package com.baizhi.service;
+package com.baizhi.service.impl;
 
+import com.baizhi.annotation.RedisCache;
 import com.baizhi.dao.UserDao;
 import com.baizhi.dao.UserMapperDao;
 import com.baizhi.entity.Trend;
 import com.baizhi.entity.User;
+import com.baizhi.service.UserService;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +37,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @RedisCache
     public Map<String, Object> selectAll(Integer page, Integer rows) {
         User user = new User();
         RowBounds rowBounds = new RowBounds((page - 1) * rows, rows);

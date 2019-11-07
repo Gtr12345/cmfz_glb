@@ -45,14 +45,12 @@ public class BannerController {
 
     @RequestMapping("query")
     public Map<String, Object> query(Integer page, Integer rows) {
-        Map<String, Object> map = bannerService.query(page, rows);
+        Map<String, Object> map = bannerService.selectAll(page, rows);
         return map;
     }
 
     @RequestMapping("upload")
     public Map<String, Object> upload(MultipartFile cover, String id, HttpServletRequest request) throws IOException {
-        System.out.println("-------------------------------------");
-        System.out.println(cover.getOriginalFilename());
         String s = cover.getOriginalFilename();
         String substring = s.substring(s.indexOf("."), s.length());
         String s1 = UUID.randomUUID().toString() + substring;

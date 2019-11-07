@@ -1,7 +1,10 @@
-package com.baizhi.service;
+package com.baizhi.service.impl;
 
+import com.baizhi.annotation.ClearRedis;
+import com.baizhi.annotation.RedisCache;
 import com.baizhi.dao.StarDao;
 import com.baizhi.entity.Star;
+import com.baizhi.service.StarService;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +19,7 @@ public class StarServiceImpl implements StarService {
     private StarDao starDao;
 
     @Override
+    @RedisCache
     public Map<String, Object> selectAll(Integer page, Integer rows) {
         Star star = new Star();
         RowBounds rowBounds = new RowBounds((page - 1) * rows, rows);
@@ -37,6 +41,7 @@ public class StarServiceImpl implements StarService {
     }
 
     @Override
+    @ClearRedis
     public String addStar(Star star) {
         star.setId(UUID.randomUUID().toString());
         star.setBir(new Date());
@@ -48,6 +53,7 @@ public class StarServiceImpl implements StarService {
     }
 
     @Override
+    @ClearRedis
     public void edit(Star star) {
         if ("".equals((star.getPhoto()))) {
             star.setPhoto(null);

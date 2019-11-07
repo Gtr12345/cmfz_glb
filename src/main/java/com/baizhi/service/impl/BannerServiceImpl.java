@@ -1,7 +1,10 @@
-package com.baizhi.service;
+package com.baizhi.service.impl;
 
+import com.baizhi.annotation.ClearRedis;
+import com.baizhi.annotation.RedisCache;
 import com.baizhi.dao.BannerDao;
 import com.baizhi.entity.Banner;
+import com.baizhi.service.BannerService;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +22,7 @@ public class BannerServiceImpl implements BannerService {
     private BannerDao bannerDao;
 
     @Override
+    @ClearRedis
     public String insert(Banner banner) {
         banner.setId(UUID.randomUUID().toString());
         banner.setCreate_date(new Date());
@@ -30,6 +34,7 @@ public class BannerServiceImpl implements BannerService {
     }
 
     @Override
+    @ClearRedis
     public void edit(Banner banner) {
         if ("".equals(banner.getCover())) {
             banner.setCover(null);
@@ -43,6 +48,7 @@ public class BannerServiceImpl implements BannerService {
     }
 
     @Override
+    @ClearRedis
     public void del(String id, HttpServletRequest request) {
         Banner banner = bannerDao.selectByPrimaryKey(id);
         int i = bannerDao.deleteByPrimaryKey(id);
@@ -60,7 +66,8 @@ public class BannerServiceImpl implements BannerService {
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS)
-    public Map<String, Object> query(Integer page, Integer rows) {
+    @RedisCache
+    public Map<String, Object> selectAll(Integer page, Integer rows) {
         Banner banner = new Banner();
         RowBounds rowBounds = new RowBounds((page - 1) * rows, rows);
         List<Banner> list = bannerDao.selectByRowBounds(banner, rowBounds);

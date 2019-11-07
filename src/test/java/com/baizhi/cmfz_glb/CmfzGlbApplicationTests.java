@@ -32,7 +32,15 @@ class CmfzGlbApplicationTests {
     private ChapterService chapterService;
     @Autowired
     private ArticleService articleService;
+    @Autowired
+    private BannerService bannerService;
 
+    @Test
+    void contextLoadsssssfs() {
+        Map<String, Object> map = bannerService.selectAll(1, 3);
+
+        System.out.println(map);
+    }
     @Test
     void contextLoadssssss() {
         List<Trend> trends = userService.queryNan();

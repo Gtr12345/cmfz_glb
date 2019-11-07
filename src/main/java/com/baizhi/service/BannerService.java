@@ -7,7 +7,7 @@ import java.util.Map;
 
 public interface BannerService {
 
-    Map<String, Object> query(Integer page, Integer rows);
+    Map<String, Object> selectAll(Integer page, Integer rows);
 
     String insert(Banner banner);
 

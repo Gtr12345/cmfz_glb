@@ -1,5 +1,7 @@
 package com.baizhi.service.impl;
 
+import com.baizhi.annotation.ClearRedis;
+import com.baizhi.annotation.RedisCache;
 import com.baizhi.dao.AlbumDao;
 import com.baizhi.entity.Album;
 import com.baizhi.service.AlbumService;
@@ -17,6 +19,7 @@ public class AlbumServiceImpl implements AlbumService {
     private AlbumDao albumDao;
 
     @Override
+    @RedisCache
     public Map<String, Object> selectAll(Integer page, Integer rows) {
         Album album = new Album();
         RowBounds rowBounds = new RowBounds((page - 1) * rows, rows);
@@ -31,6 +34,7 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
+    @ClearRedis
     public String addalbum(Album album) {
         album.setId(UUID.randomUUID().toString());
         album.setCount(0);
@@ -43,6 +47,7 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
+    @ClearRedis
     public void edit(Album album) {
         System.out.println(album);
         if ("".equals(album.getCover())) {
