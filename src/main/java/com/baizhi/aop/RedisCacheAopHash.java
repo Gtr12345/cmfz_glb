@@ -61,12 +61,13 @@ public class RedisCacheAopHash {
 
     @After("execution(* com.baizhi.service.impl.*.*(..)) && !execution(* com.baizhi.service.impl.*.selectAll(..))")
     public void after(JoinPoint joinPoint) {
-        Object target = joinPoint.getTarget();
-        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+        Object target = joinPoint.getTarget();//获取目标方法的类的对象
+        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();//获取目标方法
         Method method = methodSignature.getMethod();
-        Object[] args = joinPoint.getArgs();
         String name = target.getClass().getName();
+        //判断方法上是否存在此注解
         if (method.isAnnotationPresent(ClearRedis.class)) {
+            //清理redis缓存
             jedis.del(name);
         }
     }
