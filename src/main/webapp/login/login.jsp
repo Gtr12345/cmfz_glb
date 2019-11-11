@@ -36,7 +36,7 @@
                 var code = $("#form-code").val();
                 if (username && password && code) {
                     $.ajax({
-                        url: "${pageContext.request.contextPath}/admin/login",
+                        url: "${pageContext.request.contextPath}/loginAdmin/login",
                         type: "POST",
                         data: $("#loginForm").serialize(),
                         dataType: "json",

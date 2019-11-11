@@ -1,3 +1,4 @@
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" isELIgnored="false" %>
 <!doctype html>
 <html lang="en">
@@ -57,10 +58,18 @@
             <div class="navbar-brand"><a href="">持明法州管理系统<small>v1.0</small></a></div>
         </div>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="">欢迎:${sessionScope.loginAdmin.username}</a></li>
-            <li>
-                <a href="" id="a">退出登陆 <span class="glyphicon glyphicon-log-out"></span> </a>
-            </li>
+            <%--<li><a href="">欢迎:${sessionScope.loginAdmin.username}</a></li>--%>
+            <shiro:authenticated>
+                <li><a href="">欢迎:<shiro:principal/></a></li>
+                <li>
+                        <%--<a href="" id="a">退出登陆 <span class="glyphicon glyphicon-log-out"></span> </a>--%>
+                    <a href="${pageContext.request.contextPath}/loginAdmin/logout">退出登陆 <span
+                            class="glyphicon glyphicon-log-out"></span> </a>
+                </li>
+            </shiro:authenticated>
+            <shiro:notAuthenticated>
+                <li><a href="${pageContext.request.contextPath}/login/login.jsp">请登录</a></li>
+            </shiro:notAuthenticated>
         </ul>
     </div>
 </nav>
@@ -71,106 +80,108 @@
 
         <!--菜单-->
         <div class="col-sm-2">
+            <shiro:authenticated>
+                <!--手风琴控件-->
+                <div class="panel-group" id="accordion">
+                    <shiro:hasRole name="vip">
+                        <!--面板-->
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="userPanel">
+                                <h4 class="panel-title text-center">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#userLists"
+                                       aria-expanded="true" aria-controls="collapseOne">
+                                        轮播图管理
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="userLists" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                <div class="panel-body text-center">
+                                        <%--<li class="list-group-item"><a href="javascript:$('#centerLayout').load('${pageContext.request.contextPath}/banner/lists_s.jsp');" id="btn">全部轮播图</a></li>--%>
+                                        <%--<button type="button" class="btn btn-default  btn-smk">全部轮播图</button>--%>
+                                    <a href="javascript:$('#centerLayout').load('${pageContext.request.contextPath}/banner/lists_s.jsp')"
+                                       class="btn btn-default">全部轮播图</a>
+                                </div>
 
-            <!--手风琴控件-->
-            <div class="panel-group" id="accordion">
-
-                <!--面板-->
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="userPanel">
-                        <h4 class="panel-title text-center">
-                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#userLists"
-                               aria-expanded="true" aria-controls="collapseOne">
-                                轮播图管理
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="userLists" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                        <div class="panel-body text-center">
-                            <%--<li class="list-group-item"><a href="javascript:$('#centerLayout').load('${pageContext.request.contextPath}/banner/lists_s.jsp');" id="btn">全部轮播图</a></li>--%>
-                            <%--<button type="button" class="btn btn-default  btn-smk">全部轮播图</button>--%>
-                            <a href="javascript:$('#centerLayout').load('${pageContext.request.contextPath}/banner/lists_s.jsp')"
-                               class="btn btn-default">全部轮播图</a>
+                            </div>
                         </div>
 
-                    </div>
-                </div>
-
-                <!--类别面板-->
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="categoryPanel">
-                        <h4 class="panel-title text-center">
-                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#categoryLists"
-                               aria-expanded="true" aria-controls="collapseOne">
-                                专辑管理
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="categoryLists" class="panel-collapse collapse" role="tabpanel"
-                         aria-labelledby="headingOne">
-                        <div class="panel-body text-center">
-                            <a href="javascript:$('#centerLayout').load('${pageContext.request.contextPath}/album/album-show.jsp')"
-                               class="btn btn-default">全部专辑</a>
+                        <!--类别面板-->
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="categoryPanel">
+                                <h4 class="panel-title text-center">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#categoryLists"
+                                       aria-expanded="true" aria-controls="collapseOne">
+                                        专辑管理
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="categoryLists" class="panel-collapse collapse" role="tabpanel"
+                                 aria-labelledby="headingOne">
+                                <div class="panel-body text-center">
+                                    <a href="javascript:$('#centerLayout').load('${pageContext.request.contextPath}/album/album-show.jsp')"
+                                       class="btn btn-default">全部专辑</a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
 
-                <!--面板-->
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="bookPanel">
-                        <h4 class="panel-title text-center">
-                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#bookLists"
-                               aria-expanded="true" aria-controls="collapseOne">
-                                文章管理
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="bookLists" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                        <div class="panel-body text-center">
-                            <a href="javascript:$('#centerLayout').load('${pageContext.request.contextPath}/article/article-show.jsp')"
-                               class="btn btn-default">所有文章</a>
+                        <!--面板-->
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="bookPanel">
+                                <h4 class="panel-title text-center">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#bookLists"
+                                       aria-expanded="true" aria-controls="collapseOne">
+                                        文章管理
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="bookLists" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                <div class="panel-body text-center">
+                                    <a href="javascript:$('#centerLayout').load('${pageContext.request.contextPath}/article/article-show.jsp')"
+                                       class="btn btn-default">所有文章</a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-
-
-                <!--面板-->
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="orderPanel">
-                        <h4 class="panel-title text-center">
-                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#orderLists"
-                               aria-expanded="true" aria-controls="collapseOne">
-                                用户管理
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="orderLists" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                        <div class="panel-body text-center">
-                            <a href="javascript:$('#centerLayout').load('${pageContext.request.contextPath}/user/user-show.jsp')"
-                               class="btn btn-default">所有用户</a>
-                            <a href="javascript:$('#centerLayout').load('${pageContext.request.contextPath}/user/echarts.jsp')"
-                               class="btn btn-default">用户添加趋势</a>
+                    </shiro:hasRole>
+                    <shiro:hasRole name="svip">
+                        <!--面板-->
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="orderPanel">
+                                <h4 class="panel-title text-center">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#orderLists"
+                                       aria-expanded="true" aria-controls="collapseOne">
+                                        用户管理
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="orderLists" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                <div class="panel-body text-center">
+                                    <a href="javascript:$('#centerLayout').load('${pageContext.request.contextPath}/user/user-show.jsp')"
+                                       class="btn btn-default">所有用户</a>
+                                    <a href="javascript:$('#centerLayout').load('${pageContext.request.contextPath}/user/echarts.jsp')"
+                                       class="btn btn-default">用户添加趋势</a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <!--面板-->
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="headingFive">
-                        <h4 class="panel-title text-center">
-                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#bookListss"
-                               aria-expanded="true" aria-controls="collapseOne">
-                                明星管理
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="bookListss" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
-                        <div class="panel-body text-center">
-                            <a href="javascript:$('#centerLayout').load('${pageContext.request.contextPath}/star/star_show.jsp')"
-                               class="btn btn-default">所有明星</a>
+                        <!--面板-->
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingFive">
+                                <h4 class="panel-title text-center">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#bookListss"
+                                       aria-expanded="true" aria-controls="collapseOne">
+                                        明星管理
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="bookListss" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+                                <div class="panel-body text-center">
+                                    <a href="javascript:$('#centerLayout').load('${pageContext.request.contextPath}/star/star_show.jsp')"
+                                       class="btn btn-default">所有明星</a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    </shiro:hasRole>
                 </div>
-            </div>
+            </shiro:authenticated>
         </div>
         <div class="col-sm-10" id="centerLayout">
             <!--剧目-->

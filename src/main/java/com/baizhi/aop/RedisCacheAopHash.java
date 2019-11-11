@@ -42,14 +42,17 @@ public class RedisCacheAopHash {
                 sb.append(",");
             }
             sb.append(")");
-            System.out.println(ClassName);
-            System.out.println(sb.toString());
+            System.out.println("方法名" + ClassName);
+            System.out.println("类名" + sb.toString());
             if (jedis.hexists(ClassName, sb.toString())) {
                 //判断redis中是否存在对应的key
+                System.out.println("有redis缓存");
                 String hget = jedis.hget(ClassName, sb.toString());
-                return hget;
+                return JSONObject.parse(hget);
             } else {
+                System.out.println("无redis缓存");
                 Object proceed = proceedingJoinPoint.proceed();
+                System.out.println(proceed);
                 jedis.hset(ClassName, sb.toString(), JSONObject.toJSONString(proceed));
                 return proceed;
             }

@@ -51,5 +51,6 @@ public class AdminController {
     public void clear(HttpServletRequest request) {
         HttpSession session = request.getSession();
         session.removeAttribute("loginAdmin");
+        /*session.removeAttribute("name1");*/
     }
 }

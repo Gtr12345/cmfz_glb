@@ -35,7 +35,7 @@ public class CmfzGlbApplication {
 
     @Bean
     public Jedis getJedis() {
-        return new Jedis("192.168.174.145", 6379);
+        return new Jedis("192.168.174.147", 6379);
     }
 
 }
