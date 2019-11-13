@@ -20,6 +20,9 @@ spring:
     url: jdbc:mysql://localhost:3306/cmfz?characterEncoding=UTF-8
     username: root
     password: root
+  data:
+    elasticsearch:
+      cluster-nodes: 192.168.174.151:9300
 mybatis:
   mapper-locations: classpath:com/baizhi/mapper/*.xml
   type-aliases-package: com.baizhi.entity   # 给当前这个包下的所有类起别名 类名 类名首字母小写

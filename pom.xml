@@ -153,6 +153,11 @@
             <artifactId>shiro-ehcache</artifactId>
             <version>1.3.2</version>
         </dependency>
+        <!--es的jar-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+        </dependency>
 
 
     </dependencies>

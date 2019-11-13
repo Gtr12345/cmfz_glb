@@ -138,6 +138,8 @@
                                 <div class="panel-body text-center">
                                     <a href="javascript:$('#centerLayout').load('${pageContext.request.contextPath}/article/article-show.jsp')"
                                        class="btn btn-default">所有文章</a>
+                                    <a href="javascript:$('#centerLayout').load('${pageContext.request.contextPath}/article/article-search.jsp')"
+                                       class="btn btn-default">搜索文章</a>
                                 </div>
                             </div>
                         </div>

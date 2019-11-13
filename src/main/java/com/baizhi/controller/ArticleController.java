@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -15,6 +16,11 @@ public class ArticleController {
     @Autowired
     private ArticleService articleService;
 
+    @RequestMapping("search")
+    public List<Article> search(String content) {
+        List<Article> articles = articleService.search(content);
+        return articles;
+    }
     @RequestMapping("selectAll")
     public Map<String, Object> selectAll(Integer page, Integer rows) {
         Map<String, Object> map = articleService.selectAll(page, rows);
